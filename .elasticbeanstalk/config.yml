@@ -1,0 +1,9 @@
+branch-defaults:
+  master:
+    environment: RunningCourseApp-production
+global:
+  application_name: running-course-app
+  default_ec2_keyname: e-vmhus3mpn3
+  default_platform: Node.js running on 64bit Amazon Linux/4.8.1
+  default_region: eu-west-1
+  sc: git
