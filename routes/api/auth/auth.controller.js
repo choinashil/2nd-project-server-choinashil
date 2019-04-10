@@ -26,7 +26,7 @@ exports.check = async (req, res, next) => {
     const { name, message } = err;
     next(new NotFoundError(name, message));
   }
-}
+};
 
 
 /*

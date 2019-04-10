@@ -1,4 +1,5 @@
 # Config
+!.elasticbeanstalk/config.yml
 .csv
 
 # Logs

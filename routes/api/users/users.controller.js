@@ -12,12 +12,10 @@ exports.profile = async (req, res, next) => {
     const { _id } = res.locals.userData;
 
     if (user_id === _id.toString()) {
-      console.log('same!');
       const user = await User.findById(user_id).exec();
       const { nickName, photoUrl } = user;
-      const userInfo = { nickName, photoUrl } ; 
+      const userInfo = { nickName, photoUrl } ;
       res.json({ userInfo });
-
     } else {
       throw err('Invalid user');
     }
@@ -27,6 +25,7 @@ exports.profile = async (req, res, next) => {
     next(new NotFoundError(name, message));
   }
 }
+
 
 /*
   GET /api/users/:user-id/favorites
@@ -38,11 +37,8 @@ exports.favorites = async (req, res, next) => {
     const { _id, favorites } = res.locals.userData;
 
     if (user_id === _id.toString()) {
-      // const user = await User.findById(user_id).exec();
-      // const favoriteCourseIds = user.favorites;
       const favoriteCourses = await Course.find({ _id: { $in: favorites}});
       res.json({ favorites: favoriteCourses });
-
     } else {
       throw err('Invalid user');
     }
@@ -77,22 +73,18 @@ exports.like = async (req, res, next) => {
       };
 
       let changedData;
-      // let action;
 
       if (favorites.includes(course_id)) {
         changedData = await removeFavorites();
-        // action = 'Removed'; 
       } else {
         changedData = await addFavorites();
-        // action = 'Added';
       }
 
       const changedUserFavorites = changedData[0].favorites;
       const changedCourseInfo = changedData[1];
 
-      res.json({ 
+      res.json({
         message: 'Success',
-        // action,
         changedUserFavorites,
         changedCourseInfo
       });
@@ -118,8 +110,6 @@ exports.newCourse = async (req, res, next) => {
     const { userName, title, description, distance, coordinates, locker, restroom, gourmet, createdAt } = req.body;
     const { _id } = res.locals.userData;
 
-    console.log('--check api', user_id, _id, req.body);
-
     const saveNewCourse = () => {
       const newCourse = new Course({
         by: user_id,
@@ -139,9 +129,7 @@ exports.newCourse = async (req, res, next) => {
     }
 
     if (user_id === _id.toString()) {
-      // console.log('same!');
       const courseInfo = await saveNewCourse();
-      console.log('course saved', courseInfo);
       if (courseInfo) {
         res.json({ message: 'Saved successfully' });
       }
