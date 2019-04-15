@@ -131,7 +131,10 @@ exports.newCourse = async (req, res, next) => {
     if (user_id === _id.toString()) {
       const courseInfo = await saveNewCourse();
       if (courseInfo) {
-        res.json({ message: 'Saved successfully' });
+        res.json({ 
+          courseId: courseInfo._id,
+          message: 'Saved successfully'
+        });
       }
 
     } else {
